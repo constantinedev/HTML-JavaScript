@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link rel="icon" href="https://img.icons8.com/ios/250/ffffff/anonymous-mask.png" type="image/gif" sizes="16x16">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom CSS -->
+    <!-- <link rel="stylesheet" href=""> -->
+    <!-- Custom JavaScript -->
+    <!-- <script src="src/js/main.js"></script> -->
+    <script src="src/js/main.js"></script>
+    <link rel="stylesheet" href="src/dist/style.css">
+
+    <style>
+        .content {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="display_Controler">
+
+        <!-- Button to Open the Modal -->
+        <!-- <button type="button" class="btn btn-group-toggle" data-target="#Zero">0</button> -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SuperModal" data-whatever="@styleSelect" name="styleSelect">樣式選擇</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SuperModal" data-whatever="@dynamicSelect" name="dynamicSelect">彈性編輯</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SuperModal" data-whatever="@FreeEditor" name="FreeEditor">自定編輯</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SuperModal" data-whatever="@Calendar" name="Calendar">行事曆</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SuperModal" data-whatever="@self_carousel" name="self_carousel">輪播測試</button>
+
+        <div class="contact"></div>
+        <div class="DEBUG"></div>
+
+        <!-- The Modal HTML 跟據ID進行彈出 [彈出視窗 - styleSelect] -->
+        <div class="modal fade" id="SuperModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header border-0">
+                        <div class="modal-title"></div>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body border-0 ">
+                        <div class="configure_editor">
+                            <div class="mod_styleSelect" style="display: nonw;"></div>
+                            <div class="mod_dynamicSelect" style="display: none;"></div>
+                            <div class="mod_FreeEditor" style="display: none;"></div>
+                            <div class="mod_Calendar" style="display: none;"></div>
+                            <div class="mod_self_carousel" style="display: none;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer border-0 justify-content-center">
+                        <!-- 分頁選擇選單 -->
+                        <div class="pagination_bar"></div>
+                        <div class="footer_controler">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
