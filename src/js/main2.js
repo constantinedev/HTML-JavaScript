@@ -3,24 +3,6 @@ function chgSTY(style) {
     document.getElementById("result").value = style;
 };
 
-//圖片上傳 - [開始]
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $("#blah").attr('src', e.target.result);
-            $("#blah").attr('width', '240px');
-            $('#imgupdate').on('click', function() {
-                alert("點擊圖片上傳成功");
-                $("#img1").attr('src', e.target.result);
-                $("#img1").attr('width', "240px");
-            });
-        };
-        reader.readAsDataURL(input.files[0]);
-    };
-};
-//圖片上傳 - [結束]
-
 jQuery(document).ready(function() {
     //CSS設定
     jQuery('.configure_editor').css({
@@ -66,10 +48,8 @@ jQuery(document).ready(function() {
         });
 
         //樣式選擇API導入 - [開始]
-        var SvrURL = "https://testapi.ladraw.com:20102/Services/APIService.asmx/";
-        var API = "GetContactBackgroundTemplate";
         jQuery.ajax({
-            url: SvrURL + API,
+            url: "https://testapi.ladraw.com:21016/Services/APIService.asmx/GetContactBackgroundTemplate",
             type: "POST",
             dataType: "JSON",
             ContentType: "application/x-www-form-urlencoded",
@@ -82,7 +62,7 @@ jQuery(document).ready(function() {
 
                     jQuery('.mod_styleSelect').append(
                         '<label class="styobj" for="' + id + '">\
-                            <input type="image" class="btn-check" name="style" id="' + id + '" value="' + IMG + '" onclick="chgSTY(this.value)" src="' + IMG + '" style="width:200px;border-radius:12px;padding:0.5em;border-radius: 10px;">\
+                            <input type="image" class="btn-check" name="style" id="' + id + '" value="' + sty + '" onclick="chgSTY(this.value)" src="' + IMG + '" style="width:200px;border-radius:12px;padding:0.5em;border-radius: 10px;">\
                         </label>'
                     );
                 };
@@ -162,7 +142,7 @@ jQuery(document).ready(function() {
     jQuery('[data-whatever="@self_carousel"]').click(function() {
         console.log("OK button correct5");
         //彈出視窗CSS調整
-        jQuery('.modal-title').html('<h4>輪播測試3</h4>');
+        jQuery('.modal-title').html('<h4>輪播測試</h4>');
         jQuery('.mod_styleSelect').hide();
         jQuery('.mod_dynamicSelect').hide();
         jQuery('.mod_FreeEditor').hide();
@@ -171,38 +151,87 @@ jQuery(document).ready(function() {
 
         //載入頁面-範例
         //定義輪播工具
+
         var carousel =
             '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="1000">\
-                <div class="carousel-inner" role="listbox" style=" height:480px; text-align:center; !important;">\
+                <div class="carousel-inner" role="listbox" style="height:480px; text-align:center; !important;">\
                     <div class="carousel-item active">\
-                        <img id="img1" class="center-block w-auto h-480" style="height:480px" alt="First slide" src="http://ondinas.com.br/site/wp-content/themes/options/images/skins/headers/full_width/header-autumnBreeze.jpg">\
+                        <img src="http://ondinas.com.br/site/wp-content/themes/options/images/skins/headers/full_width/header-autumnBreeze.jpg" id="img1" class="center-block w-auto" style="height:480px" alt="First slide">\
                     </div>\
                     <div class="carousel-item">\
-                        <img id="img2" class="center-block w-auto h-480" style="height:480px" alt="Second slide" src="http://www.boostnet.in/wp-content/uploads/2016/10/Header-1.png">\
+                        <img src="http://www.boostnet.in/wp-content/uploads/2016/10/Header-1.png" id="img2" class="center-block w-auto" style="height:480px" alt="Second slide">\
                     </div>\
                     <div class="carousel-item">\
-                        <img id="img3" class="center-block w-auto h-480" style="height:480px" alt="Third slide" src="https://steklin.ru/wp-content/uploads/2019/12/Header-PNG-Pic.png">\
+                        <img src="https://steklin.ru/wp-content/uploads/2019/12/Header-PNG-Pic.png" id="img3" class="center-block w-auto" style="height:480px" alt="Third slide">\
                     </div>\
                 </div>\
             </div>';
 
+        var addmoreBTN = '<div class="tools text-center">\
+                            <button type="button" class="addBTN btn btn-primary">\
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">\
+                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>\
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>\
+                                </svg>\
+                                新增輪播圖片\
+                            </button>\
+                        </div>\
+                        <div class="addpic"></div>';
+
+
         //上傳工具/功能
-        jQuery('.mod_self_carousel').html(
-            '<form runat="server" align="center">\
-                <img id="blah" src="#" />\
-                    <input type="file" id="imgInp" accept="image/gif, image/jpeg, image/png" />\
-            </form>');
+        jQuery('.mod_self_carousel').html(addmoreBTN);
+
+        var vieID = 0;
+        jQuery(document).on('click', '.addBTN', function() {
+            jQuery('.addpic').append('<div class="tag" id="tag' + vieID + '">\
+                                        <img id="imageResult_' + vieID + '" src="#" alt="DEMO" class="imageResult_ img-fluid rounded shadow-sm mx-auto d-block">\
+                                        <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">\
+                                            <input id="upload_' + vieID + '" type="file" onchange="readURL(this);" class="uploadInput_ form-control border-0" name="imageResult_' + vieID + '">\
+                                            <div class="input-group-append">\
+                                                <label for="upload_' + vieID + '" class="btn btn-light m-0 rounded-pill px-4">\
+                                                    <small class="font-weight-bold text-muted">限於JPG PNG GIF 格式 & 小於6M上限</small>\
+                                                </label>\
+                                            </div>\
+                                        <button type="button" class="rmBTN btn btn-secondary rounded-pill" id="rmBTN sliderIMG_' + vieID + '">刪除</button>\
+                                        </div>\
+                                    </div>');
+            vieID++;
+        });
+
+        jQuery(document).on('click', '.rmBTN', function() {
+            jQuery(this).parent().parent().remove();
+        });
 
         $('.contact').html(carousel);
 
         $(".carousel").carousel();
         //特定載入功能
-        $('.modal-footer').html('<button type="button" class="imgupdate btn btn-primary float-right" id="imgupdate">確定嗎？</button>');
-        $("#imgInp").change(function() {
-            readURL(this);
+        $('.modal-footer').html('<button type="button" class="imgupdate btn btn-primary float-right" id="imgupdate">確定</button>');
+
+        jQuery('.imgupdate').click(function() {
+            jQuery('.carousel-inner').empty();
+            var slideShowIMG = $(jQuery('.imageResult_')[0]).attr('src');
+            var PreViewID = $(jQuery('.imageResult_')[0]).attr('id');
+            jQuery('.carousel-inner').append('<div class="carousel-item active"><img src="' + slideShowIMG + '" id="' + PreViewID + '" class="center-block w-auto" style="height:480px" alt="' + PreViewID + '"></div>');
+            var countIMG = jQuery('.imageResult_').length;
+            for (let i = 1; i < countIMG; i++) {
+                var PreViewID1 = $(jQuery('.imageResult_')[i]).attr('id');
+                var slideShowIMG1 = $(jQuery('.imageResult_')[i]).attr('src');
+
+                jQuery('.carousel-inner').append('<div class="carousel-item"><img src="' + slideShowIMG1 + '" id="' + PreViewID1 + '" class="center-block w-auto" style="height:480px" alt="' + PreViewID1 + '"></div>');
+            };
         });
     });
-
-
-    //輪播設定 - [結束]
 });
+
+function readURL(input) {
+    var PreViewIMGBox = jQuery(input).attr('name');
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            jQuery('#' + PreViewIMGBox).attr('src', e.target.result).attr('width', '200px');
+        };
+        reader.readAsDataURL(input.files[0]);
+    };
+};
