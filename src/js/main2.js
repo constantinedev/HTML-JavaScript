@@ -183,7 +183,7 @@ jQuery(document).ready(function() {
         jQuery('.mod_self_carousel').html(addmoreBTN);
 
         var vieID = 0;
-        jQuery(document).on('click', '.addBTN', function() {
+        jQuery('.addBTN').on('click', function() {
             jQuery('.addpic').append('<div class="tag" id="tag' + vieID + '">\
                                         <img id="imageResult_' + vieID + '" src="#" alt="DEMO" class="imageResult_ img-fluid rounded shadow-sm mx-auto d-block">\
                                         <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">\
